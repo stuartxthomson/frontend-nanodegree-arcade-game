@@ -1,4 +1,3 @@
-// got help on the checkCollisions() function from https://github.com/alexsales/frontend-nanodegree-arcade-game/blob/master/js/app.js
 var difficulty = 3;
 var startx = 202.5;
 var starty = 400;
@@ -6,12 +5,13 @@ var starty = 400;
 var Enemy = function(xloc, yloc, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.x = xloc;
-    this.y = yloc;
-    this.speed = speed;
+
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = xloc;
+    this.y = yloc;
+    this.speed = speed;
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -19,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += this.speed * dt;
+    this.x = this.x + (this.speed * dt);
     if (this.x > 505) {
         this.x = 0; // go back to the start after hitting the end of the canvas
     }
@@ -33,10 +33,10 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(xloc, yloc, speed) {
+    this.sprite = 'images/char-boy.png';
     this.x = xloc;
     this.y = yloc;
     this.speed = speed;
-    this.sprite = 'images/char-boy.png';
 }
 Player.prototype.update = function() {}
 Player.prototype.render = function() {
@@ -61,16 +61,16 @@ Player.prototype.handleInput = function(key) {
 }
 var checkCollision = function(enemy) {
     // check for collisions between enemy and player
+    // got help on this from https://github.com/alexsales/frontend-nanodegree-arcade-game/blob/master/js/app.js
+
     if (player.y + 131 >= enemy.y + 90 && player.x + 25 <= enemy.x + 88 &&
         player.y + 73 <= enemy.y + 135 && player.x + 76 >= enemy.x + 11) {
         console.log('Collision!');
-        player.x = startx;
-        player.y = starty;
+        playerReset();
     }
     // did the player make it?
     if (player.y + 63 <= 0) {
-        player.x = startx;
-        player.y = starty;
+        playerReset();
         console.log('Boom!');
     }
     // keep the player on the canvas
@@ -83,6 +83,11 @@ var checkCollision = function(enemy) {
     if (player.y >= 430) {
         player.y = 430;
     };
+};
+var playerReset = function() {
+  //send the player back to the start
+  player.x = startx;
+  player.y = starty;
 };
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
