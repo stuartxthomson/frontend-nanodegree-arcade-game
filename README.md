@@ -7,9 +7,12 @@ For detailed instructions on how to get started, check out this [guide](https://
 
 HOW TO PLAY
 
+Open index.html in your browser. 
+
 When the page loads, the game will start automatically.
 
 Use the arrow keys to move your player.
 
 Try to navigate to the top of the screen without hitting an enemy bug.
+
 Hitting a bug will send the player back to the start.

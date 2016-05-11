@@ -1,6 +1,9 @@
 var difficulty = 3;
 var startx = 202.5;
 var starty = 400;
+var TILE_WIDTH = 101;
+var TILE_HEIGHT = 83;
+
 // Enemies our player must avoid
 var Enemy = function(xloc, yloc, speed) {
     // Variables applied to each of our instances go here,
@@ -23,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505) {
         this.x = 0; // go back to the start after hitting the end of the canvas
     }
-    checkCollision(this);
+    player.checkCollision(this);
 };
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -37,54 +40,54 @@ var Player = function(xloc, yloc, speed) {
     this.x = xloc;
     this.y = yloc;
     this.speed = speed;
-}
-Player.prototype.update = function() {}
+};
+Player.prototype.update = function() {};
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 Player.prototype.handleInput = function(key) {
     // Define the movement for each input key
     if (key == 'left') {
-        player.x -= player.speed;
+        this.x -= TILE_WIDTH;
     }
     if (key == 'up') {
-        player.y -= player.speed;
+        this.y -= TILE_HEIGHT;
     }
     if (key == 'right') {
-        player.x += player.speed;
+        this.x += TILE_WIDTH;
     }
     if (key == 'down') {
-        player.y += player.speed;
+        this.y += TILE_HEIGHT;
     }
     console.log('user input is ' + key);
     console.log(player.y, player.x, player.speed);
-}
-var checkCollision = function(enemy) {
+};
+Player.prototype.checkCollision = function(enemy) {
     // check for collisions between enemy and player
     // got help on this from https://github.com/alexsales/frontend-nanodegree-arcade-game/blob/master/js/app.js
 
     if (player.y + 131 >= enemy.y + 90 && player.x + 25 <= enemy.x + 88 &&
         player.y + 73 <= enemy.y + 135 && player.x + 76 >= enemy.x + 11) {
         console.log('Collision!');
-        playerReset();
+        player.reset();
     }
     // did the player make it?
     if (player.y + 63 <= 0) {
-        playerReset();
+        player.reset();
         console.log('Boom!');
     }
     // keep the player on the canvas
     if (player.x <= 0) {
         player.x = 0;
-    };
+    }
     if (player.x >= 425) {
         player.x = 425;
-    };
+    }
     if (player.y >= 430) {
         player.y = 430;
-    };
+    }
 };
-var playerReset = function() {
+Player.prototype.reset = function() {
   //send the player back to the start
   player.x = startx;
   player.y = starty;
@@ -100,7 +103,7 @@ var makeEnemies = function(anEnemy) {
             200);
         allEnemies.push(enemy);
     }
-}
+};
 makeEnemies();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
