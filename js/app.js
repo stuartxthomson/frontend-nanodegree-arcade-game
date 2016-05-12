@@ -60,7 +60,7 @@ Player.prototype.handleInput = function(key) {
         this.y += TILE_HEIGHT;
     }
     console.log('user input is ' + key);
-    console.log(player.y, player.x, player.speed);
+    console.log(this.y, this.x, this.speed);
 };
 Player.prototype.checkCollision = function(enemy) {
     // check for collisions between enemy and player
@@ -69,7 +69,7 @@ Player.prototype.checkCollision = function(enemy) {
     if (this.y + 131 >= enemy.y + 90 && this.x + 25 <= enemy.x + 88 &&
         this.y + 73 <= enemy.y + 135 && this.x + 76 >= enemy.x + 11) {
         console.log('Collision!');
-        player.reset();
+        this.reset();
     }
     // did the player make it?
     if (this.y + 63 <= 0) {
