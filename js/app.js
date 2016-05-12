@@ -1,6 +1,6 @@
 var difficulty = 3;
-var startx = 202.5;
-var starty = 400;
+var STARTX = 202.5;
+var STARTY = 400;
 var TILE_WIDTH = 101;
 var TILE_HEIGHT = 83;
 
@@ -66,37 +66,37 @@ Player.prototype.checkCollision = function(enemy) {
     // check for collisions between enemy and player
     // got help on this from https://github.com/alexsales/frontend-nanodegree-arcade-game/blob/master/js/app.js
 
-    if (player.y + 131 >= enemy.y + 90 && player.x + 25 <= enemy.x + 88 &&
-        player.y + 73 <= enemy.y + 135 && player.x + 76 >= enemy.x + 11) {
+    if (this.y + 131 >= enemy.y + 90 && this.x + 25 <= enemy.x + 88 &&
+        this.y + 73 <= enemy.y + 135 && this.x + 76 >= enemy.x + 11) {
         console.log('Collision!');
         player.reset();
     }
     // did the player make it?
-    if (player.y + 63 <= 0) {
-        player.reset();
+    if (this.y + 63 <= 0) {
+        this.reset();
         console.log('Boom!');
     }
     // keep the player on the canvas
-    if (player.x <= 0) {
-        player.x = 0;
+    if (this.x <= 0) {
+        this.x = 0;
     }
-    if (player.x >= 425) {
-        player.x = 425;
+    if (this.x >= 425) {
+        this.x = 425;
     }
-    if (player.y >= 430) {
-        player.y = 430;
+    if (this.y >= 430) {
+        this.y = 430;
     }
 };
 Player.prototype.reset = function() {
   //send the player back to the start
-  player.x = startx;
-  player.y = starty;
+  this.x = STARTX;
+  this.y = STARTY;
 };
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-var player = new Player(startx, starty, 50);
+var player = new Player(STARTX, STARTY, 50);
 var makeEnemies = function(anEnemy) {
     for (var i = 0; i < difficulty; i++) {
         var enemy = new Enemy(0, Math.random() * 200 + 50, Math.random() *
